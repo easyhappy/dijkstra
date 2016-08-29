@@ -1,5 +1,4 @@
 require 'set'
-
 class Dijkstra
   attr_accessor :paths, :errors
 
@@ -27,8 +26,10 @@ class Dijkstra
     validate_inputs
     unless self.errors.empty?
       if @is_debug
+        puts "-"*30
         puts "有以下错误信息, 请检查正确后 在重新执行: "
         puts self.errors
+        puts "-"*30
       end
       return
     end

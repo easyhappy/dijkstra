@@ -68,44 +68,50 @@ class DijkstraTest < MiniTest::Test
   end
 
   def test_paths_is_excepted
-    dijkstra = Dijkstra.new(matrix_of_columns, 1, 5)
+    dijkstra = Dijkstra.new(matrix_of_columns, 1, 5, is_debug?)
     dijkstra.run
     assert_equal([1, 3, 6, 5], dijkstra.paths)
   end
 
   def test_paths_is_exepted_when_is_string_matrix
-    dijkstra = Dijkstra.new(string_matrix_of_columns, 'A', 'E')
+    dijkstra = Dijkstra.new(string_matrix_of_columns, 'A', 'E', is_debug?)
     dijkstra.run
     assert_equal(['A', 'C', 'F', 'E'], dijkstra.paths)
   end
 
   def test_error_when_start_column_is_isolated
-    dijkstra = Dijkstra.new(matrix_of_columns, 10, 5)
+    dijkstra = Dijkstra.new(matrix_of_columns, 10, 5, is_debug?)
     dijkstra.run
     assert_equal(1, dijkstra.errors.size)
   end
 
   def test_error_when_repeat_and_different_weight_matrix_of_columns
-    dijkstra = Dijkstra.new(repeat_and_different_weight_matrix_of_columns, 1, 5)
+    dijkstra = Dijkstra.new(repeat_and_different_weight_matrix_of_columns, 1, 5, is_debug?)
     dijkstra.run
     assert_equal(1, dijkstra.errors.size)
   end
 
   def test_error_when_wrong_columns_number
-    dijkstra = Dijkstra.new(wrong_columns_number_matrix_of_columns, 1, 5)
+    dijkstra = Dijkstra.new(wrong_columns_number_matrix_of_columns, 1, 5, is_debug?)
     dijkstra.run
     assert_equal(1, dijkstra.errors.size)
   end
 
     def test_error_when_end_column_is_isolated
-    dijkstra = Dijkstra.new(matrix_of_columns, 1, 10)
+    dijkstra = Dijkstra.new(matrix_of_columns, 1, 10, is_debug?)
     dijkstra.run
     assert_equal(1, dijkstra.errors.size)
   end
 
   def test_error_when_has_negative_weight
-    dijkstra = Dijkstra.new(invalid_matrix_of_columns, 1, 5)
+    dijkstra = Dijkstra.new(invalid_matrix_of_columns, 1, 5, is_debug?)
     dijkstra.run
     assert_equal(1, dijkstra.errors.size)
+  end
+
+  private
+
+  def is_debug?
+    ARGV.include?("debug")
   end
 end
