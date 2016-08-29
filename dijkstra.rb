@@ -34,11 +34,9 @@ class Dijkstra
     end
 
     @distance[@start_column] = 0
-    @distanced_columns = Set.new
 
     while @all_columns
       min_column = get_minimum_distance_column_from_remain_columns
-      @distanced_columns << min_column
       break if min_column == -1
 
       @adjacency_dict[min_column].each do |goto_item|
