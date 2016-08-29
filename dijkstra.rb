@@ -18,8 +18,7 @@ class Dijkstra
     @previous = {}
     @adjacency_dict = {}
     
-    init_columns_from_matrix
-    init_adjacency_dict
+    init_columns_and_adjacency_dict_from_matrix
     init_distance_and_previous_from_columns
   end
 
@@ -90,9 +89,12 @@ class Dijkstra
     @all_columns.delete min_column
     return min_column
   end
-
-  def init_adjacency_dict
+   
+  def init_columns_and_adjacency_dict_from_matrix
     for item in @matrix_of_columns
+      @all_columns << item[0]
+      @all_columns << item[1]
+
       if item[2] < 0
         self.errors << "#{item[0]} - #{item[1]} 是负权值, 请检查输入值!"
       end
@@ -102,13 +104,6 @@ class Dijkstra
 
       @adjacency_dict[item[1]] ||= []
       @adjacency_dict[item[1]] << [item[0], item[2]]
-    end
-  end 
-   
-  def init_columns_from_matrix
-    for item in @matrix_of_columns
-      @all_columns << item[0]
-      @all_columns << item[1]
     end
   end
 
