@@ -48,6 +48,8 @@ class Dijkstra
     generate_road_path
   end
 
+  private
+
   def generate_road_path
     current_column = @end_column
     while true
@@ -61,8 +63,6 @@ class Dijkstra
       puts "路径为: #{self.paths.map(&:to_s).join('->')}"
     end
   end
-
-  private
 
   def validate_inputs
     unless @all_columns.include?(@start_column)
