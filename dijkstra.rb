@@ -83,7 +83,7 @@ class Dijkstra
         next
       end
 
-      if column < @distance[min_column]
+      if @distance[column] < @distance[min_column]
         min_column = column
       end
     end

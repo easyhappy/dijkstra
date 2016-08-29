@@ -16,6 +16,19 @@ class DijkstraTest < MiniTest::Test
     ]
   end
 
+  def string_matrix_of_columns
+    [['A', 'B', 7],
+     ['A', 'C', 9],
+     ['A', 'F', 14],
+     ['B', 'C', 10],
+     ['B', 'D', 15],
+     ['C', 'D', 11],
+     ['C', 'F', 2],
+     ['D', 'E', 6],
+     ['E', 'F', 9]
+    ]
+  end
+
   def invalid_matrix_of_columns
     [[1, 2, 7],
      [1, 3, 9],
@@ -58,6 +71,12 @@ class DijkstraTest < MiniTest::Test
     dijkstra = Dijkstra.new(matrix_of_columns, 1, 5)
     dijkstra.run
     assert_equal([1, 3, 6, 5], dijkstra.paths)
+  end
+
+  def test_paths_is_exepted_when_is_string_matrix
+    dijkstra = Dijkstra.new(string_matrix_of_columns, 'A', 'E')
+    dijkstra.run
+    assert_equal(['A', 'C', 'F', 'E'], dijkstra.paths)
   end
 
   def test_error_when_start_column_is_isolated
