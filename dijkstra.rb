@@ -17,6 +17,7 @@ class Dijkstra
     @distance = {}
     @previous = {}
     @adjacency_dict = {}
+    @cached_adjacency_dict_for_validate = {}
     
     init_columns_and_adjacency_dict_from_matrix
     init_distance_and_previous_from_columns
@@ -95,8 +96,14 @@ class Dijkstra
       @all_columns << item[0]
       @all_columns << item[1]
 
+      if item.count != 3
+        self.errors << "#{item} 元素个数不对, 请检查"
+        next
+      end
+
       if item[2] < 0
         self.errors << "#{item[0]} - #{item[1]} 是负权值, 请检查输入值!"
+        next
       end
 
       @adjacency_dict[item[0]] ||= []
@@ -104,6 +111,12 @@ class Dijkstra
 
       @adjacency_dict[item[1]] ||= []
       @adjacency_dict[item[1]] << [item[0], item[2]]
+
+      key = item[0..1].map(&:to_s).sort.join("_")
+      if @cached_adjacency_dict_for_validate[key] and @cached_adjacency_dict_for_validate[key] != item[2]
+        self.errors << "#{item[0]} - #{item[1]} 有两组以上 不同的权重值, 请检查"
+      end
+      @cached_adjacency_dict_for_validate[key] = item[2]
     end
   end
 
